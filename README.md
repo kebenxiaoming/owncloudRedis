@@ -1,0 +1,3 @@
+# owncloudRedis
+实现owncloud的分布式,修改了session的存储方式，改成了redis存储Session，另外实现了mount.json文件转换成数据库存储，
+但是目前只支持单个用户方式分配外接存储的数据库存储方式
