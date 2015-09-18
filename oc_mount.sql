@@ -30,11 +30,3 @@ CREATE TABLE `oc_mount` (
   `storage_id` varchar(11) COLLATE utf8_bin DEFAULT NULL COMMENT '存储的id（从oc_storage中返回）',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- ----------------------------
--- Records of oc_mount
--- ----------------------------
-INSERT INTO `oc_mount` VALUES ('1', '0', 'sunny', '/$user/files/FTP', '\\OC\\Files\\Storage\\FTP', '{\"host\":\"192.168.200.122\",\"user\":\"sunny\",\"password\":\"\",\"root\":\"1100000001\",\"secure\":\"false\",\"password_encrypted\":\"NnhkcnY2d3gyN3FjMTB3aKr4MYW1iSkKcfunKDaCrlA=\"}', '100', '4');
-INSERT INTO `oc_mount` VALUES ('8', '0', 'test', '/$user/files/FTP', '\\OC\\Files\\Storage\\FTP', '{\"host\":\"192.168.200.122\",\"user\":\"sunny\",\"password\":\"\",\"root\":\"1100000003\",\"secure\":\"false\",\"password_encrypted\":\"MnJ5N3hoY2Ewbnd5eGF2Y0q9s0pGEy0O3XXgfGcuoiA=\"}', '100', '8');
-INSERT INTO `oc_mount` VALUES ('11', '0', 'sun', '/$user/files/FTP', '\\OC\\Files\\Storage\\FTP', '{\"host\":\"192.168.200.122\",\"user\":\"sunny\",\"password\":\"\",\"root\":\"1100000002\",\"secure\":\"false\",\"password_encrypted\":\"bzFpbnlzZGF0ZnplNHR6YrwaTLd+HWUdefyYiCNN43E=\"}', '100', '6');
-INSERT INTO `oc_mount` VALUES ('14', '0', 'ceshi', '/$user/files/FTP', '\\OC\\Files\\Storage\\FTP', '{\"host\":\"192.168.200.122\",\"user\":\"sunny\",\"password\":\"\",\"root\":\"1100000004\",\"secure\":\"false\",\"password_encrypted\":\"N2Ezdml6aXV0cHlyOHJuZttaoI5u9E3rzQg\\/kpaA\\/a4=\"}', '100', '13');
