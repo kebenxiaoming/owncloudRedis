@@ -1,0 +1,92 @@
+Array
+(
+    [SID_CREATED] => 1441763474                                                                 \lib\base.php                           的438行开始赋值
+    [LAST_ACTIVITY] => 1441763474                                                               \lib\base.php                           的455行赋值
+    [OC_Version_Timestamp] => 1439785605                                                        \lib\private\util.php                   的323行赋值 
+    [OC_Version] => Array                                                                       \lib\private\util.php                   的325行赋值 
+        (
+            [0] => 8
+            [1] => 0
+            [2] => 4
+            [3] => 2
+        )
+
+    [OC_VersionString] => 8.0.4                                                                 \lib\private\util.php                   的327行赋值 
+    [OC_Channel] => stable                                                                      \lib\private\util.php                   的329行赋值 
+    [OC_Build] => 2015-06-04T13:45:27+00:00 5fcab24e592c5f0f35d3293449dbd2f15a40f5f8            \lib\private\util.php                   的331行赋值 
+    [checkServer_succeeded] => 1                                                                \lib\private\util.php                   的648行赋值 
+    [phpCAS] => Array                                                                           \lib\base.php                           的898行赋值
+        (
+            [user] => 1100000001
+            [attributes] => Array
+                (
+                    [id] => 90000000001
+                    [redirect_url] => %2Findex.php%2Fapps%2Ffiles%2F%3Fdir%3D%252F
+                    [sex] => 1
+                    [username] => dongdahai
+                    [authenticationMethod] => com.jeaw.sso.adaptors.jdbc.QueryDatabaseAuthenticationHandler
+                    [email] => sina.vip@sina.com
+                    [nickname] => dongdaHai
+                    [status] => 1
+                    [cellphone] => 13100000001
+                    [usertype] => 01
+                    [loginid] => 1100000001
+                )
+
+        )
+
+    [user_id] => 1100000001                                                                     \lib\private\user\session.php           的116行赋值
+    [loginname] => 1100000001                                                                   \lib\private\user\session.php           的163行赋值
+    [requesttoken] => b/pdciY5Qqv59SfRXzDcMrKm6SAWwE                                            \lib\private\util.php                   的963行赋值
+)
+
+程序中session使用得都是ISession接口  
+4c63l9mh59dquo50tk7rahjh34    
+
+SID_CREATED|i:1442307046;
+LAST_ACTIVITY|i:1442307057;
+OC_Version_Timestamp|i:1439785605;
+OC_Version|a:4:{i:0;i:8;i:1;i:0;i:2;i:4;i:3;i:2;}
+OC_VersionString|s:5:\"8.0.4\";
+OC_Channel|s:6:\"stable\";
+OC_Build|s:66:\"2015-06-04T13:45:27+00:00 5fcab24e592c5f0f35d3293449dbd2f15a40f5f8\";
+checkServer_succeeded|b:1;
+phpCAS|a:2:{
+s:4:\"user\";
+s:10:\"1100000001\";
+s:10:\"attributes\";
+a:11:{
+s:2:\"id\";
+s:11:\"90000000001\";
+s:12:\"redirect_url\";
+s:34:\"%2Findex.php%2Fsettings%2Fpersonal\";
+s:3:\"sx\";
+s:1:\"1\";
+s:8:\"username\";
+s:9:\"dongdahai\";
+s:20:\"authenticationMethod\";
+s:61:\"com.jeaw.sso.adaptors.jdbc.QueryDatabaseAuthenticationHandler\";
+s:5:\"email\";
+s:17:\"sina.vip@sina.com\";
+s:8:\"nickname\";
+s:9:\"dongdaHai\";
+s:6:\"status\";
+s:1:\"1\";
+s:9:\"cellphone\";
+s:11:\"13100000001\";
+s:8:\"usertype\";
+s:2:\"01\";
+s:7:\"loginid\";
+s:10:\"1100000001\";
+}
+}
+user_id|s:10:\"1100000001\";
+loginname|s:10:
+
+
+
+
+
+
+
+
