@@ -1,0 +1,36 @@
+{
+    "user": {
+        "sunny": {
+            "/$user/files/FTP": {
+                "class": "\\OC\\Files\\Storage\\FTP",
+                "options": {
+                    "host": "192.168.200.122",
+                    "user": "sunny",
+                    "password": "",
+                    "root": "1100000001",
+                    "secure": "false",
+                    "password_encrypted": "NnhkcnY2d3gyN3FjMTB3aKr4MYW1iSkKcfunKDaCrlA="
+                },
+                "priority": "100",
+                "storage_id": "4"
+            }
+        }
+    },
+    "group": {
+        "admin": {
+            "\/$user\/files\/FTP": {
+                "class": "\\OC\\Files\\Storage\\FTP",
+                "options": {
+                    "host": "192.168.200.122",
+                    "user": "sunny",
+                    "password": "",
+                    "root": "1100000002",
+                    "secure": "false",
+                    "password_encrypted": "bng1Z3JqZHR5cHluZHUxa+YC\/PQLE9ksmn3TPM1MDiw="
+                },
+                "priority": 100,
+                "storage_id": "6"
+            }
+        }
+    }
+}
