@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<info>
+    <id>filefilter</id>
+    <name>Filefilter</name>
+    <description>My first ownCloud app</description>
+    <licence>AGPL</licence>
+    <author>sunny</author>
+    <version>0.0.1</version>
+    <namespace>Filefilter</namespace>
+    <category>other</category>
+    <dependencies>
+        <owncloud min-version="8.0" />
+    </dependencies>
+</info>
