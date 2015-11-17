@@ -109,7 +109,9 @@
 			//if (result.data.permissions) {
 			//	this.setDirectoryPermissions(result.data.permissions);
 			//}
+			if(result.data!=null){
 			this.setFiles(result.data.files);
+			}
 			return true;
 		},
 	});
