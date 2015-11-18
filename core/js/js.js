@@ -1204,6 +1204,14 @@ $.fn.filterAttr = function(attr_name, attr_value) {
 	return this.filter(function() { return $(this).attr(attr_name) === attr_value; });
 };
 
+
+/**
+ * 新增的根据两个属性和值返回DOM的方法
+ */
+$.fn.filterAttr2 = function(attr_name1, attr_value1,attr_name2, attr_value2) {
+	return this.filter(function() { return $(this).attr(attr_name1) === attr_value1&&$(this).attr(attr_name2) === attr_value2; });
+};
+
 /**
  * Returns a human readable file size
  * @param {number} size Size in bytes
