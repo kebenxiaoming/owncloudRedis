@@ -448,7 +448,7 @@
 				},
 				render: _.bind(this._renderRenameAction, this),
 				actionHandler: function (filename, context) {
-					context.fileList.rename(filename);
+					context.fileList.rename(filename,context.dir);
 				}
 			});
 
