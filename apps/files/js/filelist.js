@@ -1384,7 +1384,7 @@
 		 *
 		 * @param oldname file name of the file to rename
 		 */
-		rename: function(oldname) {
+		rename: function(oldname,dir) {
 			var self = this;
 			var tr, td, input, form;
 			tr = this.findFileEl(oldname);
