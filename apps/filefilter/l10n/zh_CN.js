@@ -64,6 +64,7 @@ OC.L10N.register(
     "Error deleting file." : "删除文件出错。",
     "Name" : "名称",
     "Size" : "大小",
+    "Path" : "路径",
     "Modified" : "修改日期",
     "_%n folder_::_%n folders_" : ["%n 文件夹"],
     "_%n file_::_%n files_" : ["%n个文件"],

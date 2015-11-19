@@ -64,6 +64,7 @@ OC.L10N.register(
     "No entries in this folder match '{filter}'" : "No entries in this folder match '{filter}'",
     "Name" : "Name",
     "Size" : "Size",
+        "Path" : "Path",
     "Modified" : "Modified",
     "_%n folder_::_%n folders_" : ["%n folder","%n folders"],
     "_%n file_::_%n files_" : ["%n file","%n files"],

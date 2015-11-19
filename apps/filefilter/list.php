@@ -8,9 +8,9 @@
 OCP\User::checkLoggedIn();
 
 $l = \OC::$server->getL10N('filefilter');
-
 OCP\Util::addScript('filefilter', 'app');
 OCP\Util::addScript('filefilter', 'filterfilelist');
+//OCP\Util::addScript('filefilter', 'documentsfilelist');
 
 // renders the controls and table headers template
 $tmpl = new OCP\Template('filefilter', 'list', '');

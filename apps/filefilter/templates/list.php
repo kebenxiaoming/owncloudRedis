@@ -39,9 +39,15 @@
 <!--					</span>-->
 			</div>
 		</th>
+
 		<th id="headerSize" class="hidden column-size">
 			<a class="size sort columntitle" data-sort="size"><span><?php p($l->t('Size')); ?></span><span class="sort-indicator"></span></a>
 		</th>
+
+		<th id="headerPath" class="hidden column-path">
+			<a class="path sort columntitle" data-sort="path"><span><?php p($l->t('Path')); ?></span><span class="sort-indicator"></span></a>
+		</th>
+
 		<th id="headerDate" class="hidden column-mtime">
 			<a id="modified" class="columntitle" data-sort="mtime"><span><?php p($l->t( 'Modified' )); ?></span><span class="sort-indicator"></span></a>
 <!--					<span class="selectedActions"><a href="" class="delete-selected">-->
@@ -50,6 +56,8 @@
 <!--								 src="--><?php //print_unescaped(OCP\image_path("core", "actions/delete.svg")); ?><!--" />-->
 <!--						</a></span>-->
 		</th>
+
+
 	</tr>
 	</thead>
 	<tbody id="fileList">

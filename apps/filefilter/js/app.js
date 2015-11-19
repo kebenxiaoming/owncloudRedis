@@ -52,7 +52,6 @@ OCA.Filefilter.App = {
 				fileActions: this._createFileActions()
 			}
 		);
-
 		this._extendFileList(this._picFileList);
 		this._picFileList.appName = t('filefilter', 'Pictures');
 		return this._picFileList;
@@ -103,10 +102,9 @@ OCA.Filefilter.App = {
 			{
 				id:'filefilter.others',
 				scrollContainer: $('#app-content'),
-				fileActions: this._createFileActions()
+				fileActions: this._createFileActions(),
 			}
 		);
-
 		this._extendFileList(this._othFileList);
 		this._othFileList.appName = t('filefilter', 'Others');
 		return this._othFileList;
@@ -139,11 +137,45 @@ OCA.Filefilter.App = {
 		}
 	},
 
+	/**
+	 * Destroy the app
+	 */
+	destroy: function() {
+		OCA.Files.fileActions.off('setDefault.app-files', this._onActionsUpdated);
+		OCA.Files.fileActions.off('registerAction.app-files', this._onActionsUpdated);
+		window.FileActions.off('setDefault.app-files', this._onActionsUpdated);
+		window.FileActions.off('registerAction.app-files', this._onActionsUpdated);
+
+		this.removePicturesList();
+		this.removeDocumentsList();
+		this.removeVideosList();
+		this.removeAudiosList();
+		this.removeOthersList();
+		this._picFileList = null;
+		this._docFileList=null;
+		this._vidFileList=null;
+		this._audFileList=null;
+		this._othFileList=null;
+		delete this._globalActionsInitialized;
+	},
 	_createFileActions: function() {
 		// inherit file actions from the files app
 		var fileActions = new OCA.Files.FileActions();
 		fileActions.registerDefaultActions();
 
+		// legacy actions
+		fileActions.merge(window.FileActions);
+		// regular actions
+		fileActions.merge(OCA.Files.fileActions);
+
+		if (!this._globalActionsInitialized) {
+			this._onActionsUpdated = _.bind(this._onActionsUpdated, this);
+			OCA.Files.fileActions.on('setDefault.app-files', this._onActionsUpdated);
+			OCA.Files.fileActions.on('registerAction.app-files', this._onActionsUpdated);
+			window.FileActions.on('setDefault.app-files', this._onActionsUpdated);
+			window.FileActions.on('registerAction.app-files', this._onActionsUpdated);
+			this._globalActionsInitialized = true;
+		}
 
 		// when the user clicks on a folder, redirect to the corresponding
 		// folder in the files app instead of opening it directly
@@ -151,8 +183,30 @@ OCA.Filefilter.App = {
 			OCA.Files.App.setActiveView('files', {silent: true});
 			OCA.Files.App.fileList.changeDirectory(context.$file.attr('data-path') + '/' + filename, true, true);
 		});
+
+		OC.Plugins.attach('OCA.Filefilter.App', this);
 		fileActions.setDefault('dir', 'Open');
+		//for(pro in fileActions) {
+		//	document.write("<p>" + fileActions[pro] + "</p>");
+		//}
 		return fileActions;
+	},
+
+	_onActionsUpdated: function(ev) {
+		_.each([this._docFileList, this._picFileList, this._vidFileList,this._audFileList,this._othFileList], function(list) {
+			if (!list) {
+				return;
+			}
+
+			if (ev.action) {
+				list.fileActions.registerAction(ev.action);
+			} else if (ev.defaultAction) {
+				list.fileActions.setDefault(
+					ev.defaultAction.mime,
+					ev.defaultAction.name
+				);
+			}
+		});
 	},
 
 	_extendFileList: function(fileList) {

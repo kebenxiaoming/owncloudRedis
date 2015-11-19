@@ -3,7 +3,7 @@
 OCP\JSON::checkLoggedIn();
 \OC::$server->getSession()->close();
 
-$l = \OC::$server->getL10N('documents');
+$l = \OC::$server->getL10N('filefilter');
 
 // Load the files
 $dir = isset($_GET['dir']) ? (string)$_GET['dir'] : '';
@@ -45,12 +45,18 @@ try {
 
 	$mimetypes=$mimetypesarr[$view];
 
-	//首先选择出所有符合文档要求的mimetype 的id
-	$queryDoc = \OC_DB::prepare('SELECT * FROM `*PREFIX*mimetypes` WHERE `mimetype` in ('.$mimetypes.')');
+	try {
+		//首先选择出所有符合文档要求的mimetype 的id
+		$queryDoc = \OC_DB::prepare('SELECT * FROM `*PREFIX*mimetypes` WHERE `mimetype` in (' . $mimetypes . ')');
 
-	$Mimeresult =$queryDoc->execute();
+		$Mimeresult = $queryDoc->execute();
 
-	$mimetypesrow = $Mimeresult->fetchAll();
+		$mimetypesrow = $Mimeresult->fetchAll();
+	}catch(\Exception $e) {
+		\OCP\Util::writeLog('filefilter', __METHOD__.', exception: '.$e->getMessage(),
+			\OCP\Util::ERROR);
+		return false;
+	}
 
 	if(empty($mimetypesrow)){
 		$data['directory'] = $dir;
@@ -67,6 +73,7 @@ try {
 	}
 
 	$mimetypesid=substr($mimetypesid,0,(strrpos($mimetypesid,',')));
+	try{
 	//选择出当前用户对应的mount数据
 	$queryDelFast = \OC_DB::prepare('SELECT * FROM `*PREFIX*mount` WHERE `name` = ?');
 	$result =$queryDelFast->execute(array($_SESSION['user_id']));
@@ -77,7 +84,11 @@ try {
 
 	$result =$queryAllFiles->execute(array($row['storage_id']));
 	$row = $result->fetchAll();
-
+	} catch(\Exception $e) {
+	\OCP\Util::writeLog('filefilter', __METHOD__.', exception: '.$e->getMessage(),
+		\OCP\Util::ERROR);
+	return false;
+	}
 	$files=$row;
 	if($view=="pictures") {
 		//将mimetype转换为字符串
@@ -93,12 +104,10 @@ try {
 			unset($files[$key]['storage']);
 			if (substr($file['path'], 0, strrpos($file['path'], '/')) != "") {
 				$files[$key]['path'] = $dir . '/' . substr($file['path'], 0, strrpos($file['path'], '/'));
-				$files[$key]['dir']=substr($file['path'], 0, strrpos($file['path'], '/'));
 			} else {
 				$files[$key]['path'] = $dir;
-				$files[$key]['dir']="全部文件";
 			}
-			unset($files[$key]['fileid']);
+			//unset($files[$key]['fileid']);
 			$files[$key]['type'] = 'file';
 			$files[$key]['date'] = \OCP\Util::formatDate($file['storage_mtime']);
 			unset($files[$key]['storage_mtime']);
@@ -122,12 +131,10 @@ try {
 			unset($files[$key]['storage']);
 			if (substr($file['path'], 0, strrpos($file['path'], '/')) != "") {
 				$files[$key]['path'] = $dir . '/' . substr($file['path'], 0, strrpos($file['path'], '/'));
-				$files[$key]['dir']=substr($file['path'], 0, strrpos($file['path'], '/'));
 			} else {
 				$files[$key]['path'] = $dir;
-				$files[$key]['dir']="全部文件";
 			}
-			unset($files[$key]['fileid']);
+			//unset($files[$key]['fileid']);
 			$files[$key]['type'] = 'file';
 			$files[$key]['date'] = \OCP\Util::formatDate($file['storage_mtime']);
 			unset($files[$key]['storage_mtime']);
@@ -137,9 +144,62 @@ try {
 			$files[$key]['permissions'] = (int)$file['permissions'];
 		}
 	}
+	if(empty($files)){
+		$data['directory'] = $dir;
+		$data['files'] = $files;
+		//\OCA\Files\Helper::formatFileInfos($files);
+		$data['permissions'] = (int)$permissions;
+
+		OCP\JSON::success(array('data' => $data));
+		die("所查询文件类型不存在");
+	}
 	//按照数据格式要求返回数据
+	//将当前files信息转换为以fileid为key的数组
+	foreach($files as $file){
+		$filesById[$file['fileid']] = $file;
+	}
+	try {
+		$conn = \OC_DB::getConnection();
+		$chunks = array_chunk(array_keys($filesById), 900, false);
+		foreach ($chunks as $chunk) {
+			$result = $conn->executeQuery(
+				'SELECT `category`, `categoryid`, `objid` ' .
+				'FROM `' .'*PREFIX*vcategory_to_object' . '` r, `' . '*PREFIX*vcategory' . '` ' .
+				'WHERE `categoryid` = `id` AND `uid` = ? AND r.`type` = ? AND `objid` IN (?)',
+				array($_SESSION['user_id'], 'files', $chunk),
+				array(null, null, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY)
+			);
+			while ($row = $result->fetch()) {
+				$objId = (int)$row['objid'];
+				if (!isset($entries[$objId])) {
+					$entry = $entries[$objId] = array();
+				}
+				$entry = $entries[$objId][] = $row['category'];
+			}
+			if (\OCP\DB::isError($result)) {
+				\OCP\Util::writeLog('filefilter', __METHOD__. 'DB error: ' . \OCP\DB::getErrorMessage($result), \OCP\Util::ERROR);
+				return false;
+			}
+		}
+	} catch(\Exception $e) {
+		\OCP\Util::writeLog('filefilter', __METHOD__.', exception: '.$e->getMessage(),
+			\OCP\Util::ERROR);
+		return false;
+	}
+	//将tags赋值给files数组
+	if (isset($entries)) {
+		foreach ($entries as $fileId => $fileTags) {
+			$filesById[$fileId]['tags'] = $fileTags;
+		}
+	}
+	//将最后值变为filelist
+	foreach($filesById as $val){
+		$filelist[]=$val;
+	}
+
 	$data['directory'] = $dir;
-	$data['files'] = $files;//\OCA\Files\Helper::formatFileInfos($files);
+	$data['files'] = $filelist;
+	//\OCA\Files\Helper::formatFileInfos($files);
 	$data['permissions'] = (int)$permissions;
 
 	OCP\JSON::success(array('data' => $data));

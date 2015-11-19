@@ -109,12 +109,12 @@
 			//if (result.data.permissions) {
 			//	this.setDirectoryPermissions(result.data.permissions);
 			//}
-			if(result.data!=null){
-			this.setFiles(result.data.files);
+			if(result.data!=null) {
+				this.setFiles(result.data.files);
 			}
 			return true;
 		},
-		//根据数据创建行
+			//根据数据创建行
 			_createRow: function(fileData, options) {
 				var td, simpleSize, basename, extension, sizeColor,
 					icon = OC.Util.replaceSVGIcon(fileData.icon),
@@ -245,6 +245,7 @@
 					"style": 'color:rgb(' + sizeColor + ',' + sizeColor + ',' + sizeColor + ')'
 				}).text(path);
 				tr.append(td);
+
 				// date column (1000 milliseconds to seconds, 60 seconds, 60 minutes, 24 hours)
 				// difference in days multiplied by 5 - brightest shade for files older than 32 days (160/5)
 				var modifiedColor = Math.round(((new Date()).getTime() - mtime )/1000/60/60/24*5 );
@@ -522,6 +523,7 @@
 				});
 			},
 	});
+
 
 	/**
 	 * Mount point info attributes.
