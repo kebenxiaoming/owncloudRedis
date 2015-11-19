@@ -1018,9 +1018,10 @@
 			else {
 				this.setPageTitle();
 			}
-
+			if(targetDir=="/"){
+				targetDir="/SWIFT";
+			}
 			this._currentDirectory = targetDir;
-
 			// legacy stuff
 			this.$el.find('#dir').val(targetDir);
 
@@ -2197,7 +2198,6 @@
 	 * @property {String} [icon] path to the mime type icon
 	 * @property {String} etag etag of the file
 	 */
-
 	OCA.Files.FileList = FileList;
 })();
 

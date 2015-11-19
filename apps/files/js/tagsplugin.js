@@ -70,6 +70,11 @@
 
 		allowedLists: [
 			'files',
+			'filefilter.documents',
+			'filefilter.pictures',
+			'filefilter.videos',
+			'filefilter.audios',
+			'filefilter.others',
 			'favorites'
 		],
 
@@ -177,4 +182,3 @@
 })(OCA);
 
 OC.Plugins.register('OCA.Files.FileList', OCA.Files.TagsPlugin);
-
